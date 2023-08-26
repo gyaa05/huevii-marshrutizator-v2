@@ -1,0 +1,6 @@
+fastapi==0.101.0
+pydantic==2.1.1
+sqlalchemy==1.4.49
+asyncpg==0.28.0
+uvicorn==0.23.2
+pyjwt==2.8.0

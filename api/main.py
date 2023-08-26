@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from models.db_session import global_init, create_session
 
-from routes import team
+from routes import team, station
 
 description = """All requests require a header in the following format: {'Authorization': 'Bearer jwt_token'}
 
@@ -19,6 +19,7 @@ description = """All requests require a header in the following format: {'Author
 
 app = FastAPI(title="Posvyat API", description=description)
 app.include_router(team.router, prefix="/team", tags=["team"])
+app.include_router(station.router, prefix="/station", tags=["station"])
 
 app.add_middleware(
     CORSMiddleware,

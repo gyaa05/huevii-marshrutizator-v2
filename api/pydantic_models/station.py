@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from pydantic.types import Decimal
 
-class Station(BaseModel):
+class CreateStation(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     name: str

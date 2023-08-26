@@ -9,3 +9,13 @@ class CreateStation(BaseModel):
     latitude: Decimal
     longtitude: Decimal
     flag: str
+
+class GetStation(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    name: str
+    description: str
+    latitude: Decimal
+    longtitude: Decimal
+    flag: str
+    status: str

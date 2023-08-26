@@ -13,6 +13,11 @@ class Station(Base):
     longtitude = Column(Numeric(12, 10), nullable=False)
     flag = Column(String, nullable=False)
 
+    @classmethod
+    async def get_station_by_id(cls, station_id: int, session: AsyncSession):
+        _ = await session.execute(select(cls).where(cls.id == station_id))
+        return _.scalar()
+
     async def save(self, session: AsyncSession):
         session.add(self)
         await session.commit()

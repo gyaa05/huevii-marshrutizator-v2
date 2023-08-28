@@ -7,6 +7,9 @@ from descriptions.team import *
 from pydantic_models.team import RegisterTeam, LoginInTeam, RegisterOut, TeamInfo
 from models.team import Team
 from auth.auth_handler import sign_jwt
+from pydantic_models.station import TeamStation
+from typing import Annotated
+from fastapi import Body
 
 router = APIRouter()
 
@@ -30,3 +33,21 @@ async def get_team_info(token: JWTHeader = Depends(JWTBearer()), session: AsyncS
     if team := await Team.get_team_by_id(token.team_id, session):
         return TeamInfo.model_validate(team)
     return Response(status_code=404)
+
+@router.post("/get-station", summary="Get station for execution", operation_id="get-station-for-execution",
+             description=get_station_description, response_model=TeamStation)
+async def get_station(token: JWTHeader = Depends(JWTBearer()), session: AsyncSession = Depends(get_session)):
+    if station := await Team.get_next_station(token.team_id, session):
+        return TeamStation.model_validate(station)
+    return Response(status_code=404)
+
+@router.post("/complete-station", summary="Complete station by flag", operation_id="complete-station-by-flag",
+             description=complete_station_by_flag_description, response_class=Response)
+async def complete_station(flag: Annotated[str, Body(embed=True)], token: JWTHeader = Depends(JWTBearer()), session: AsyncSession = Depends(get_session)):
+    if resp := await Team.complete_station(token.team_id, flag, session):
+        if resp == 1:
+            return Response(content = "all", status_code=200)
+        elif resp == 2:
+            return Response()
+        else:
+            return Response(status_code=404)

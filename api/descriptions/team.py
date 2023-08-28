@@ -1,3 +1,5 @@
 register_new_team_description="Register new team"
 login_team_description="Login team"
 get_team_info_description="Get team info"
+get_station_description="Get station for exection"
+complete_station_by_flag_description="Complete station by flag description"

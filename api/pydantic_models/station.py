@@ -19,3 +19,11 @@ class GetStation(BaseModel):
     longtitude: Decimal
     flag: str
     status: str
+
+class TeamStation(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    name: str
+    description: str
+    latitude: Decimal
+    longtitude: Decimal
